@@ -33,7 +33,6 @@ import hashlib
 import base64
 import time
 import httplib
-import asyncore
 import StringIO
 import mimetools
 import socket
@@ -148,11 +147,9 @@ def ListFollow(req):
 		return True
 
 
-class AWSRequest(asyncore.dispatcher_with_send):
+class AWSRequest(object):
 
 	def __init__(self, host, uri, key, secret, action, parameters, handler=None, follower=None, verb='GET'):
-		asyncore.dispatcher_with_send.__init__(self)
-
 		self._host = host
 		self._uri = uri
 		self._key = key
@@ -314,34 +311,4 @@ class AWSRequest(asyncore.dispatcher_with_send):
 		return len(self.makeBody())
 
 
-if __name__ == '__main__':
-	key, secret = aws.getBotoCredentials()
-
-	if False:
-		r = AWSRequest('sqs.us-west-1.amazonaws.com', '/', key, secret)
-		print r.makeURL('ListQueues', {
-	#			'MessageBody': 'Your Message Text',
-				'Version': '2009-02-01',
-	#			'Expires': '2008-02-10T12:00:00Z',
-			})
-	r = AWSRequest('us-west-1.queue.amazonaws.com', '/', key, secret, 'CreateQueue', {
-			'Version': '2009-02-01',
-			'QueueName': 'pointstore',
-		})
-	print r.makeURL()
-
-	m = AWSRequestManager()
-	m.add(AWSRequest('sqs.us-west-1.amazonaws.com', '/', key, secret, 'CreateQueue', {
-			'Version': '2009-02-01',
-			'QueueName': 'pointstore',
-		}))
-	m.add(AWSRequest('sqs.us-west-1.amazonaws.com', '/', key, secret, 'CreateQueue', {
-			'Version': '2009-02-01',
-			'QueueName': 'pointstore',
-		}))
-	g, b, i = m.run()
-	for req in g:
-		print req.result
-	for req in b:
-		print 'Fail', req.result
 

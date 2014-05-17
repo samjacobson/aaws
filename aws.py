@@ -23,19 +23,12 @@ from xml.etree import ElementTree as ET
 import os.path
 
 
-# Services to implement:
-# EC2
-# SQS
-# SNS
-# SDB
-# RDS
-
 def getBotoCredentials():
 	import ConfigParser
 	configParser = ConfigParser.ConfigParser()
-	pth = os.path.expanduser('~/.boto')
+	pth = 'aws.cfg'
 	if not os.path.exists(pth):
-		pth = '/etc/boto.cfg'
+		return None, None
 	configParser.read(pth)
 	key = configParser.get('Credentials', 'aws_access_key_id', False, None)
 	secret = configParser.get('Credentials', 'aws_secret_access_key', False, None)
@@ -62,22 +55,4 @@ class AWSCompoundError(Exception):
 
 class AWSService(object):
 	pass
-
-
-
-
-class SNS(AWSService):
-	pass
-
-
-if __name__ == '__main__':
-	key, secret = request.getBotoCredentials()
-	sqs = SQS('us-west-1', key, secret)
-	req = sqs.CreateQueue('pointstore')
-	print req.makeURL()
-	print req.blockGET()
-
-	req = sqs.ListQueues()
-	print req.makeURL()
-	print req.blockGET()
 
