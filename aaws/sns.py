@@ -25,11 +25,14 @@ from urlparse import urlparse
 
 class SNS(AWSService):
 	endpoints = {
-		'us-east-1': 'sns.us-east-1.amazonaws.com',
-		'us-west-1': 'sns.us-west-1.amazonaws.com',
-		'eu-west-1': 'sns.eu-west-1.amazonaws.com',
-		'ap-southeast-1': 'sns.ap-southeast-1.amazonaws.com',
-		'ap-northeast-1': 'sns.ap-northeast-1.amazonaws.com',
+		'us-east-1': 'sns.us-east-1.amazonaws.com',		# N.Virginia
+		'sa-east-1': 'sns.sa-east-1.amazonaws.com',		# Sao Paulo
+		'us-west-1': 'sns.us-west-1.amazonaws.com',		# N.California
+		'us-west-2': 'sns.us-west-2.amazonaws.com',		# Oregon
+		'eu-west-1': 'sns.eu-west-1.amazonaws.com',		# Ireland
+		'ap-southeast-1': 'sns.ap-southeast-1.amazonaws.com',	# Singapore
+		'ap-southeast-2': 'sns.ap-southeast-2.amazonaws.com',	# Sydney
+		'ap-northeast-1': 'sns.ap-northeast-1.amazonaws.com',	# Tokyo
 	}
 	xmlns = 'http://sns.amazonaws.com/doc/2010-03-31/'
 

@@ -36,6 +36,7 @@ class EC2(AWSService):
 		'us-west-1': 'ec2.us-west-1.amazonaws.com',
 		'eu-west-1': 'ec2.eu-west-1.amazonaws.com',
 		'ap-southeast-1': 'ec2.ap-southeast-1.amazonaws.com',
+		'ap-southeast-2': 'ec2.ap-southeast-2.amazonaws.com',
 		'ap-northeast-1': 'ec2.ap-northeast-1.amazonaws.com',
 	}
 	version = '2011-05-15'
@@ -89,8 +90,9 @@ class EC2(AWSService):
 						# XXX: groupSet, blockDeviceMapping
 						tags = {}
 						tagSet = item.find('{%s}tagSet' % self.xmlns)
-						for tagitem in tagSet.findall('{%s}item' % self.xmlns):
-							tags[tagitem.find('{%s}key' % self.xmlns).text] = tagitem.find('{%s}value' % self.xmlns).text
+						if tagSet is not None:
+							for tagitem in tagSet.findall('{%s}item' % self.xmlns):
+								tags[tagitem.find('{%s}key' % self.xmlns).text] = tagitem.find('{%s}value' % self.xmlns).text
 						i['tags'] = tags
 						instances.append(i)
 				return instances
