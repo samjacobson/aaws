@@ -206,13 +206,14 @@ class AWSRequest(object):
 		while True:
 			try:
 				status, reason, data = self._attemptReq(current, verb)
-				result = self.handle(status, reason, data)
+				self.result = result = self.handle(status, reason, data)
 				if follow:
-					current, accumulator = self.follow(current, result, accumulator)
-					if current is None:
-						return accumulator
-					if --nFollow <= 0:
-						raise aws.AWSError(-1, 'Number of follows exceeded', data)
+					if self.follow(self):
+						if --nFollow <= 0:
+							raise aws.AWSError(-1, 'Number of follows exceeded', data)
+					else:
+						self.result = self._accum
+						return self.result
 				else:
 					return result
 			except aws.AWSError:
@@ -221,6 +222,8 @@ class AWSRequest(object):
 				retries -= 1
 
 	def execute(self, retries=5, follow=10):
+		return self._execute(self._verb, retries, follow)
+
 		mgr = AWSRequestManager()
 		mgr.add(self)
 		return mgr.execute(retries, follow)[0].result

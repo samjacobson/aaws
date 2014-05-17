@@ -24,7 +24,7 @@
 #
 #
 
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 import request
 from xml.etree import ElementTree as ET
 from urlparse import urlparse
@@ -110,7 +110,7 @@ class EC2(AWSService):
 
 
 if __name__ == '__main__':
-	key, secret = getBotoCredentials()
+	key, secret = getCredentials()
 	ec2 = EC2('us-west-1', key, secret)
 	print ec2.DescribeInstances().execute()
 

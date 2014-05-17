@@ -19,7 +19,7 @@
 
 from proxy import ServiceProxy, ManagerProxy
 from request import AWSRequestManager, AWSRequest
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 from sqs import SQS
 from sns import SNS
 from ec2 import EC2

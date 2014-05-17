@@ -17,7 +17,7 @@
 # along with AAWS.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 import request
 from xml.etree import ElementTree as ET
 from urlparse import urlparse
@@ -254,7 +254,7 @@ class Route53(AWSService):
 
 if __name__ == '__main__':
 	import proxy
-	key, secret = getBotoCredentials()
+	key, secret = getCredentials()
 	dns = proxy.ServiceProxy(Route53('us-west-1', key, secret))
 	zones = dns.ListHostedZones()
 	print zones.keys()

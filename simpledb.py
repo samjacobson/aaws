@@ -17,7 +17,7 @@
 # along with AAWS.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 import request
 from xml.etree import ElementTree as ET
 
@@ -488,7 +488,7 @@ class SimpleDB(AWSService):
 
 
 if __name__ == '__main__':
-	key, secret = getBotoCredentials()
+	key, secret = getCredentials()
 	sdb = SimpleDB('us-west-1', key, secret)
 	print sdb.ListDomains().GET()
 	print sdb.CreateDomain('test').GET()

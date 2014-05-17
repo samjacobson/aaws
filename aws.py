@@ -23,7 +23,7 @@ from xml.etree import ElementTree as ET
 import os.path
 
 
-def getBotoCredentials():
+def getCredentials():
 	import ConfigParser
 	configParser = ConfigParser.ConfigParser()
 	pth = 'aws.cfg'
@@ -34,6 +34,7 @@ def getBotoCredentials():
 	secret = configParser.get('Credentials', 'aws_secret_access_key', False, None)
 	return key, secret
 
+#getBotoCredentials = getCredentials
 
 class AWSError(Exception):
 

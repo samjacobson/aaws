@@ -17,7 +17,7 @@
 # along with AAWS.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 import uuid
 import json
 from urlparse import urlparse
@@ -74,7 +74,7 @@ if __name__ == '__main__':
 	from sns import SNS
 	import time
 
-	key, secret = getBotoCredentials()
+	key, secret = getCredentials()
 	sqs = SQS('us-west-1', key, secret)
 	sns = SNS('us-west-1', key, secret)
 

@@ -26,7 +26,7 @@
 #
 #
 
-from aws import AWSService, AWSError, getBotoCredentials
+from aws import AWSService, AWSError, getCredentials
 import request
 from xml.etree import ElementTree as ET
 from urlparse import urlparse
@@ -312,7 +312,7 @@ if __name__ == '__main__':
 	import proxy
 	import sys
 
-	key, secret = getBotoCredentials()
+	key, secret = getCredentials()
 	s3 = S3('us-west-1', key, secret)
 	buckets = s3.ListBuckets().execute(retries=0)
 	print buckets
