@@ -228,6 +228,43 @@ class SNS(AWSService):
 			}, response)
 
 
+	def GetEndpointAttributes(self, EndpointArn):
+		"""Retrieves the endpoint attributes for a device on one of the supported push
+			notification services, such as GCM and APNS.
+
+			EndpointArn -- EndpointArn for GetEndpointAttributes input
+				Type: String
+				Required: Yes
+
+			Returns -- A dict of the endpoint's attributes. Attributes in this map include:
+				EndpointArn -- the endpoint's ARN
+				CustomUserData -- arbitrary user data to associate with the endpoint. Amazon SNS
+					does not use this data. The data must be in UTF-8 format and less than 2KB.
+				Enabled -- flag that enables/disables delivery to the endpoint. Amazon SNS will
+					set this to false when a notification service indicates to Amazon SNS that the
+					endpoint is invalid. Users can set it back to true, typically after updating Token.
+				Token -- device token, also referred to as a registration id, for an app and mobile
+					device. This is returned from the notification service when an app and mobile
+					device are registered with the notification service.
+				Type: dict(String -> String)
+			"""
+
+		def response(status, reason, data):
+			if status == 200:
+				root = ET.fromstring(data)
+				attrib = {}
+				for node in root.findall('.//{%s}entry' % self.xmlns):
+					name = node.find('{%s}key' % self.xmlns)
+					val = node.find('{%s}value' % self.xmlns)
+					attrib[name.text] = val.text
+				return attrib
+			raise AWSError(status, reason, data)
+
+		return request.AWSRequest(self._endpoint, '/', self._key, self._secret, 'GetEndpointAttributes', {
+				'EndpointArn': EndpointArn,
+			}, response)
+
+
 	def GetTopicAttributes(self, TopicArn):
 		"""The GetTopicAttributes action returns all of the properties of a topic customers
 			have created. Topic properties returned might differ based on the authorization of

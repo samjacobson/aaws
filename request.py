@@ -203,6 +203,7 @@ class AWSRequest(object):
 		nFollow = follow
 		current = self
 		accumulator = None
+		self._accum = None
 		while True:
 			try:
 				status, reason, data = self._attemptReq(current, verb)
@@ -305,7 +306,7 @@ class AWSRequest(object):
 		return urllib.quote(self._uri) + '?' + '&'.join(parms)
 
 	def makeHeaders(self, verb='GET'):
-		pass
+		return {}
 
 	def makeBody(self):
 		return ''
